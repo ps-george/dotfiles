@@ -146,4 +146,396 @@ bind '"\eOA": history-search-backward'
 bind '"\eOB": history-search-forward'
 
 # Git status bar
-source ~/.bash-powerline.sh
+
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
+## Uncomment to disable git info
+#POWERLINE_GIT=0
+
+__powerline() {
+    # Colorscheme
+    readonly RESET='\[\033[m\]'
+	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_CWD='\[\033[0;34m\]' # blue
+    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
+    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
+    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+
+    readonly SYMBOL_GIT_BRANCH='⑂'
+    readonly SYMBOL_GIT_MODIFIED='*'
+    readonly SYMBOL_GIT_PUSH='↑'
+    readonly SYMBOL_GIT_PULL='↓'
+
+    if [[ -z "$PS_SYMBOL" ]]; then
+      case "$(uname)" in
+          Darwin)   PS_SYMBOL='';;
+          Linux)    PS_SYMBOL='$';;
+          *)        PS_SYMBOL='%';;
+      esac
+    fi
+
+    __git_info() { 
+        [[ $POWERLINE_GIT = 0 ]] && return # disabled
+        hash git 2>/dev/null || return # git not found
+        local git_eng="env LANG=C git"   # force git output in English to make our work easier
+
+        # get current branch name
+        local ref=$($git_eng symbolic-ref --short HEAD 2>/dev/null)
+
+        if [[ -n "$ref" ]]; then
+            # prepend branch symbol
+            ref=$SYMBOL_GIT_BRANCH$ref
+        else
+            # get tag name or short unique hash
+            ref=$($git_eng describe --tags --always 2>/dev/null)
+        fi
+
+        [[ -n "$ref" ]] || return  # not a git repo
+
+        local marks
+
+        # scan first two lines of output from `git status`
+        while IFS= read -r line; do
+            if [[ $line =~ ^## ]]; then # header line
+                [[ $line =~ ahead\ ([0-9]+) ]] && marks+=" $SYMBOL_GIT_PUSH${BASH_REMATCH[1]}"
