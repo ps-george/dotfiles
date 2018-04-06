@@ -12,4 +12,4 @@ ln -srv sshrc.d/vim ~/.vim
 ln -srv sshrc.d ~/.sshrc.d
 ln -srv sshrc.d/.tmux.conf ~/.tmux.conf
 ln -srv bash.tmp ~/.bashrc
-ln -srv .sshrc ~/.sshrc
+ln -srv bash.tmp ~/.sshrc
