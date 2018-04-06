@@ -69,7 +69,7 @@ __powerline() {
             local symbol="$COLOR_FAILURE $PS_SYMBOL $RESET"
         fi
 
-        local cwd="$COLOR_USER\u@\h:$COLOR_CWD\w\n$RESET"
+        local cwd="$COLOR_USER\u@\h\n$COLOR_CWD\w:$RESET"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
         # provided strings, which would cause security issues.
