@@ -2,13 +2,21 @@ syntax enable " enable syntax processing
 set background=light
 colorscheme solarized
 set term=screen-256color
-set tabstop=4 " number of visual spaces per tab
-"set softtabstop=4 " number of spaces in tab when editing
-"set expandtab " tabs are spaces
 
 set relativenumber " show line numbers
 set number
-filetype indent on " load filtetype specific indent files
+
+" default indent settings
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
+filetype plugin indent on " load filetype specific indent files
+autocmd FileType python setlocal softwidth=4 softtabstop=4 expandtab
+autocmd FileType bash setlocal softwidth=2 softtabstop=2 expandtab
+autocmd FileType bashrc setlocal softwidth=2 softtabstop=2 expandtab
+
 
 set wildmenu " visual autocomplete for command menu
 set showmatch " highlights matching brackets
