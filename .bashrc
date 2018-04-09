@@ -145,5 +145,15 @@ bind '"\e[B": history-search-forward'
 bind '"\eOA": history-search-backward'
 bind '"\eOB": history-search-forward'
 
+# ssh as gpunterbboxxcouk
+sshgp (){
+  if [ -z "$1" ]; then
+    echo "No argument supplied"
+    exit 1
+  else
+    sshrc "gpunterbboxxcouk@$1"  
+  fi
+}
+
 # Git status bar
 
