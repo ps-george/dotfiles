@@ -117,6 +117,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+# Reload bash from ~/.bashrc
+sbash () {
+  source ~/.bashrc
+}
+
 # Easy extract
 extract () {
   if [ -f $1 ] ; then
@@ -171,15 +176,16 @@ ctail () {
   CYAN="$(awkcol 36)"
   tail "$@" \
   | awk " 
-    /GET.*20[0-9] -/ $BLUE 
-    /POST.*20[0-9] -/ $CYAN
-    /(GET|POST).*30[0-9] -/ $YELLOW
-    /40[0-9] -/ $RED
-    /50[0-9] -/ $MAGENTA
+    /NOTSET/ $MAGENTA
+    /DEBUG/ $MAGENTA
+    /INFO/ $BLUE 
+    /WARNING/ $YELLOW
+    /ERROR/ $RED
+    /CRITICAL/ $RED
   "
 }
 
-tmuxrc() {
+tmuxrc () {
   local TMUXDIR=/tmp/footmuxserver
   if ! [ -d $TMUXDIR ]; then
     rm -rf $TMUXDIR
@@ -190,5 +196,29 @@ tmuxrc() {
     SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S $TMUXDIR/tmuxserver $@
 }
 
+VIMDIR=~/.vim/vimrc
+light () {
+  DIR=~/gnome-terminal-colors-solarized/
+  if [ -f "$DIR/set_light.sh" ] ; then
+    cd "$DIR"
+    bash "${DIR}set_light.sh" "solarized" "--skip-dircolors"
+    sed -r -i -e 's/(set background=)(dark)/\1light/' "$VIMDIR"
+    back
+  else
+    echo "$DIR doesn't exist"
+  fi 
+}
+
+dark () {
+  DIR=~/gnome-terminal-colors-solarized/
+  if [ -f "$DIR/set_dark.sh" ] ; then
+    cd $DIR
+    bash "${DIR}set_dark.sh" "solarized" "--skip-dircolors"
+    sed -r -i -e 's/(set background=)(light)/\1dark/' "$VIMDIR"
+    back
+  else
+    echo "$DIR doesn't exist"
+  fi 
+}
 # Git status bar
 
