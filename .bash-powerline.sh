@@ -6,7 +6,7 @@
 __powerline() {
     # Colorscheme
     readonly RESET='\[\033[m\]'
-	readonly COLOR_USER='\[\033[0;35m\]' # magenta
+    readonly COLOR_USER='\[\033[0;35m\]' # magenta
     readonly COLOR_CWD='\[\033[0;34m\]' # blue
     readonly COLOR_GIT='\[\033[0;36m\]' # cyan
     readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
@@ -69,7 +69,14 @@ __powerline() {
             local symbol="$COLOR_FAILURE $PS_SYMBOL $RESET"
         fi
 
-        local cwd="$COLOR_USER\u@\h\n$COLOR_CWD\w:$RESET"
+        # Determine active Python virtualenv details.
+        if test -z "$VIRTUAL_ENV" ; then
+          local PYTHON_VIRTUALENV=""
+        else
+          local PYTHON_VIRTUALENV="${COLOR_SUCCESS}(`basename \`dirname "$VIRTUAL_ENV"\``/`basename "$VIRTUAL_ENV"`)"
+        fi
+
+        local cwd="$COLOR_USER\u@\h$PYTHON_VIRTUALENV\n$COLOR_CWD\w:$RESET"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
         # provided strings, which would cause security issues.
@@ -82,7 +89,6 @@ __powerline() {
             # promptvars is disabled. Avoid creating unnecessary env var.
             local git="$COLOR_GIT$(__git_info)$RESET"
         fi
-
         PS1="$cwd$git$symbol"
     }
 
