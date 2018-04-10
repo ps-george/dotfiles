@@ -1,7 +1,6 @@
 #!/bin/bash
 cp -f .bashrc bash.tmp
 cat .bash-powerline.sh >> bash.tmp
-HOME=~
 rm -rf ~/.vim
 rm -rf ~/.sshrc.d
 rm -f ~/.tmux.conf
