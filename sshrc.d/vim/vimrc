@@ -13,9 +13,9 @@ set tabstop=2
 set expandtab
 
 filetype plugin indent on " load filetype specific indent files
-autocmd FileType python setlocal softwidth=4 softtabstop=4 expandtab
-autocmd FileType bash setlocal softwidth=2 softtabstop=2 expandtab
-autocmd FileType bashrc setlocal softwidth=2 softtabstop=2 expandtab
+autocmd FileType python setlocal sw=4 softtabstop=4 expandtab
+autocmd FileType bash setlocal sw=2 softtabstop=2 expandtab
+autocmd FileType bashrc setlocal sw=2 softtabstop=2 expandtab
 
 
 set wildmenu " visual autocomplete for command menu
@@ -39,3 +39,17 @@ endif
 
 " toggle background with <Leader>+bg
 map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+" swap p and P. by default p pastes after cursor, P pastes before. Would like
+" p to paste before cursor and P after (seems more conventional)
+noremap p gp
+noremap P gP
+noremap gp p
+noremap gP P
+
+" check whether clipboard exists using `:echo has('clipboard')`, if not
+" install vim-gtk or vim-gnome
+" copy and paste
+vmap <C-c> "+y<ESC>
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+p
