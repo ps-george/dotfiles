@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# If gnome-colours-solarized doesn't exist, clone it to ~/gnome-colours-solarized
+# create a bash profile called 'solarized'
+# run gnome-colours-solarized/install.sh to install dircolours and a theme
+
 cp -f .bashrc bash.tmp
 cat .bash-powerline.sh >> bash.tmp
 rm -rf ~/.vim
