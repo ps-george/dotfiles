@@ -19,7 +19,6 @@ autocmd FileType bashrc setlocal sw=2 softtabstop=2 expandtab
 
 let g:ale_linters = {'python': ['flake8', 'pylint']}
 let g:ale_fixers = {'python': ['autopep8', 'yapf']}
-let g:ale_echo_cursor = 0 " fix hidden cursor on error lines issue
 
 set wildmenu " visual autocomplete for command menu
 set showmatch " highlights matching brackets
