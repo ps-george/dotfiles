@@ -97,12 +97,10 @@ alias tmux='tmux -2'
 
 # docker alias for running on Bash for Ubuntu WSL
 alias windock='docker -H tcp://localhost:2375'
-
-# Autocompletion downloded via: https://docs.docker.com/compose/completion/ 
-# sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose 
+# Autocompletion downloded via: https://docs.docker.com/compose/completion/
+# sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 # Apply autocompletion to new alias
 complete -F _docker_compose windock docker-compose.exe
-complete -F _docker windock docker.exe
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
