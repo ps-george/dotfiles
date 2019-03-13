@@ -37,3 +37,6 @@ sudo add-apt-repository ppa:russell-s-stewart/ppa
 sudo apt-get update
 sudo apt-get install sshrc
 ```
+
+## Install solarized colours
+`git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git`
