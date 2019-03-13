@@ -7,7 +7,7 @@ __powerline() {
     # Colorscheme
     readonly RESET='\[\033[m\]'
     readonly COLOR_USER='\[\033[0;35m\]' # magenta
-    readonly COLOR_CWD='\[\033[0;93\]' # light yellow
+    readonly COLOR_CWD='\[\033[0;93m\]' # light yellow
     readonly COLOR_GIT='\[\033[0;36m\]' # cyan
     readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
     readonly COLOR_FAILURE='\[\033[0;31m\]' # red
