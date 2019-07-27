@@ -1,6 +1,6 @@
 syntax enable " enable syntax processing
 set background=dark
-colorscheme solarized
+" colorscheme solarized
 set term=screen-256color
 
 set relativenumber " show line numbers
