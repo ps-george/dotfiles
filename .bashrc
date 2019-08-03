@@ -134,10 +134,11 @@ sbash () {
   source ~/.bashrc
 }
 
-# List biggest files
-biggest () {
-  du -hsx * | sort -rh | head -10
+# List biggest files * sizes
+files () {
+  du -sch .[!.]* * | sort -hr | head -10
 }
+
 # Easy extract
 extract () {
   if [ -f $1 ] ; then
