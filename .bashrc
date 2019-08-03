@@ -233,4 +233,6 @@ PATH=$PATH:/snap/bin
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
+# Add yarn to system path
+export PATH="$PATH:$(yarn global bin)"
 # Git status bar
