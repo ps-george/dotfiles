@@ -139,6 +139,11 @@ files () {
   du -sch .[!.]* * | sort -hr | head -10
 }
 
+# Git pull in all subdirectories (in parallel)
+pull () {
+  ls | xargs -P10 -I{} git -C {} pull
+}
+
 # Easy extract
 extract () {
   if [ -f $1 ] ; then
