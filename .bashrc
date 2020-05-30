@@ -209,39 +209,8 @@ tmuxrc () {
 }
 
 VIMDIR=~/.vim/vimrc
-light () {
-  DIR=~/gnome-terminal-colors-solarized/
-  if [ -f "$DIR/set_light.sh" ] ; then
-    cd "$DIR"
-    bash "${DIR}set_light.sh" "solarized" "--skip-dircolors"
-    sed -r -i -e 's/(set background=)(dark)/\1light/' "$VIMDIR"
-    back
-  else
-    echo "$DIR doesn't exist"
-  fi 
-}
-
-dark () {
-  DIR=~/gnome-terminal-colors-solarized/
-  if [ -f "$DIR/set_dark.sh" ] ; then
-    cd $DIR
-    bash "${DIR}set_dark.sh" "solarized" "--skip-dircolors"
-    sed -r -i -e 's/(set background=)(light)/\1dark/' "$VIMDIR"
-    back
-  else
-    echo "$DIR doesn't exist"
-  fi 
-}
-
-# Add snap packages to system path
-PATH=$PATH:/snap/bin
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
 
 # Activate nvm
 source ~/.nvm/nvm.sh
 
-# Add yarn to system path
-export PATH="$PATH:$(yarn global bin)"
 # Git status bar
