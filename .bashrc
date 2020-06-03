@@ -96,15 +96,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias back='cd $OLDPWD'
 alias mkdir='mkdir -p -v'
-alias tmux='tmux -2'
-
-# docker alias for running on Bash for Ubuntu WSL
-alias windock='docker -H tcp://localhost:2375'
-
-# Autocompletion downloded via: https://docs.docker.com/compose/completion/
-# sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
-# Apply autocompletion to new alias
-complete -F _docker_compose windock docker-compose.exe
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -114,6 +105,17 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+# Enable 256 bit colours
+alias tmux='tmux -2'
+# from https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
+# git fetch-pull
+alias gitfp='git fetch --all; git pull --all'
+alias vpn='sudo surfshark-vpn'
+
+# docker alias for running on Bash for Ubuntu WSL
+alias windock='docker -H tcp://localhost:2375'
+
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -129,6 +131,12 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Autocompletion downloded via: https://docs.docker.com/compose/completion/
+# sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+# Apply autocompletion to new alias
+complete -F _docker_compose windock docker-compose.exe
+
 # Reload bash from ~/.bashrc
 sbash () {
   source ~/.bashrc
