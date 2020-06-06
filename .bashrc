@@ -110,7 +110,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias tmux='tmux -2'
 # from https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
 # git fetch-pull
-alias gitfp='git fetch --all; git pull --all'
+alias gitfp='git pull --all'
 alias vpn='sudo surfshark-vpn'
 
 # docker alias for running on Bash for Ubuntu WSL
