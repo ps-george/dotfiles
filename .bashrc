@@ -111,11 +111,7 @@ alias tmux='tmux -2'
 # from https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
 # git fetch-pull
 alias gitfp='git pull --all'
-alias vpn='sudo surfshark-vpn'
-
-# docker alias for running on Bash for Ubuntu WSL
-alias windock='docker -H tcp://localhost:2375'
-
+alias k='kubectl'
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -134,8 +130,6 @@ fi
 
 # Autocompletion downloded via: https://docs.docker.com/compose/completion/
 # sudo curl -L https://raw.githubusercontent.com/docker/compose/1.23.2/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
-# Apply autocompletion to new alias
-complete -F _docker_compose windock docker-compose.exe
 
 # Reload bash from ~/.bashrc
 sbash () {
@@ -216,9 +210,5 @@ tmuxrc () {
     SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S $TMUXDIR/tmuxserver $@
 }
 
-VIMDIR=~/.vim/vimrc
 
-# Activate nvm
-source ~/.nvm/nvm.sh
-
-# Git status bar
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
