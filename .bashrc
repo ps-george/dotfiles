@@ -11,6 +11,8 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+# cross-shell history update
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -108,10 +110,20 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Enable 256 bit colours
 alias tmux='tmux -2'
+alias k='kubectl'
+alias activate='source ./venv/bin/activate'
+alias pip='pip3'
+alias gca='git diff --cached'
+alias gco='git checkout'
+alias gst='git status'
 # from https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
 # git fetch-pull
-alias gitfp='git pull --all'
-alias k='kubectl'
+alias gf='git pull --all'
+alias gp='git push'
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
+alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
+
+complete -F __start_kubectl k
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -210,5 +222,15 @@ tmuxrc () {
     SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S $TMUXDIR/tmuxserver $@
 }
 
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+. /usr/share/autojump/autojump.sh
+
+export PATH="$HOME/.local/bin:$PATH"
+export CLOUDSDK_PYTHON=/usr/bin/python
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
