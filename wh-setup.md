@@ -32,6 +32,7 @@
 - [ ] migrate (https://github.com/golang-migrate/migrate/releases/tag/v4.14.1)
 - [ ] postgres
 - [ ] terraform
+- [ ] [autojump](https://github.com/wting/autojump)
 
 ## Logins
 
