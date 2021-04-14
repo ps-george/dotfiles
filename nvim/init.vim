@@ -2,6 +2,14 @@
 syntax enable " enable syntax processing
 set relativenumber " show line numbers
 set number
+
+" turn off all numbers (for copying)
+function! NumberToggle()
+    set nu!
+    set rnu!
+endfunction
+
+nnoremap <C-n> :call NumberToggle()<CR>
 "
 " General tab settings
 set tabstop=4       " number of visual spaces per TAB

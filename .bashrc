@@ -113,6 +113,7 @@ alias tmux='tmux -2'
 alias k='kubectl'
 alias activate='source ./venv/bin/activate'
 alias pip='pip3'
+alias note='vim ~/notes/$(date +%Y-%m-%d).md'
 alias gca='git diff --cached'
 alias gco='git checkout'
 alias gst='git status'
@@ -120,8 +121,6 @@ alias gst='git status'
 # git fetch-pull
 alias gf='git pull --all'
 alias gp='git push'
-alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
-alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
 
 complete -F __start_kubectl k
 
