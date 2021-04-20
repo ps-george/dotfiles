@@ -113,7 +113,9 @@ alias tmux='tmux -2'
 alias k='kubectl'
 alias activate='source ./venv/bin/activate'
 alias pip='pip3'
-alias note='vim ~/notes/$(date +%Y-%m-%d).md'
+alias note='vim ~/notes/general.md'
+alias today='vim ~/notes/$(date +%Y-%m-%d).md'
+alias yesterday='vim ~/notes/$(date -d yesterday +%Y-%m-%d).md'
 alias gca='git diff --cached'
 alias gco='git checkout'
 alias gst='git status'
@@ -225,11 +227,11 @@ tmuxrc () {
 
 . /usr/share/autojump/autojump.sh
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="/snap/bin:$HOME/.local/bin:$PATH"
 export CLOUDSDK_PYTHON=/usr/bin/python
 export VISUAL=vim
 export EDITOR="$VISUAL"
-
+export CLOUDSDK_PYTHON=/usr/bin/python2.7
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
