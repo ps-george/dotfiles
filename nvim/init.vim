@@ -10,7 +10,11 @@ function! NumberToggle()
 endfunction
 
 nnoremap <C-n> :call NumberToggle()<CR>
-"
+
+" insert date on F9 press
+nnoremap <F9> "=strftime("%a %d %b %Y")<CR>P
+inoremap <F9> <C-R>=strftime("%a %d %b %Y")<CR>
+
 " General tab settings
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
