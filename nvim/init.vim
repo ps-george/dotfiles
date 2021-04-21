@@ -1,9 +1,20 @@
-" Configuration for nvim
+call plug#begin('~/.vim/plugged')
+Plug 'nvie/vim-flake8'
+call plug#end()
+
+" call Flake8 on file save
+autocmd BufWritePost *.py call flake8#Flake8()
+autocmd Filetype python setlocal ts=4 sts=4 sw=4
+
 syntax enable " enable syntax processing
 set relativenumber " show line numbers
 set number
 
-" turn off all numbers (for copying)
+" Enumerate filetypes you want to highlight in code block in markdown.
+" Please be careful because too many items in the list will make highlighting markdown slow.
+let g:markdown_fenced_languages = ['sql', 'python']
+
+" Relative or absolute number lines
 function! NumberToggle()
     set nu!
     set rnu!
@@ -30,8 +41,8 @@ set incsearch " search as characters are entered
 " set hlsearch  " highlight matches
 
 " move vertically by visual line
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 
 " allows cursor change in tmux mode
 if exists('$TMUX')

@@ -9,6 +9,13 @@ ln -s ~/dotfiles/.bashrc ~/.bashrc
 ln -s ~/dotfiles/.sshrc ~/.sshrc
 ```
 
+## Install Plugged for nvim
+
+```
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+
 ## Install powerline for tmux
 ```bash
 pip install powerline-status
