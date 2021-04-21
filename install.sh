@@ -7,10 +7,14 @@
 cp -f .bashrc bash.tmp
 cat .bash-powerline.sh >> bash.tmp
 rm -rf ~/.vim
+rm -rf ~/.config/nvim
 rm -rf ~/.sshrc.d
 rm -f ~/.tmux.conf
 rm -f ~/.bashrc
 rm -f ~/.sshrc
+
+mkdir -p ~/.config/nvim
+cp -v nvim/init.vim ~/.config/nvim
 
 cp -r sshrc.d/vim ~/.vim
 if [ $? -eq 0 ]; then
