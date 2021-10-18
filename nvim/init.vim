@@ -1,6 +1,19 @@
 call plug#begin('~/.vim/plugged')
 Plug 'nvie/vim-flake8'
+Plug 'dense-analysis/ale'
+Plug 'Shougo/deoplete.nvim'
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 call plug#end()
+
+" Add nice symbols for lightline-ale
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_infos = "\uf129"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
 
 " call Flake8 on file save
 autocmd BufWritePost *.py call flake8#Flake8()
