@@ -1,19 +1,5 @@
-call plug#begin('~/.vim/plugged')
-Plug 'nvie/vim-flake8'
-Plug 'dense-analysis/ale'
-Plug 'Shougo/deoplete.nvim'
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
-call plug#end()
-
-" Add nice symbols for lightline-ale
-let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_infos = "\uf129"
-let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#ale#indicator_errors = "\uf05e"
-let g:lightline#ale#indicator_ok = "\uf00c"
+" Remap leader to ,
+let mapleader = "\\"
 
 " call Flake8 on file save
 autocmd BufWritePost *.py call flake8#Flake8()
@@ -60,7 +46,6 @@ set incsearch " search as characters are entered
 " move vertically by visual line
 " nnoremap j gj
 " nnoremap k gk
-
 " allows cursor change in tmux mode
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -69,3 +54,26 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'nvie/vim-flake8'
+Plug 'dense-analysis/ale'
+Plug 'davidhalter/jedi-vim'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+call plug#end()
+
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+
+" Add nice symbols for lightline-ale
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_infos = "\uf129"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
