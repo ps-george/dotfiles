@@ -1,8 +1,6 @@
 " Remap leader to ,
 let mapleader = "\\"
 
-" call Flake8 on file save
-autocmd BufWritePost *.py call flake8#Flake8()
 autocmd Filetype python setlocal ts=4 sts=4 sw=4
 
 syntax enable " enable syntax processing
@@ -56,7 +54,6 @@ else
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'nvie/vim-flake8'
 Plug 'dense-analysis/ale'
 Plug 'davidhalter/jedi-vim'
 Plug 'tpope/vim-surround'
@@ -77,3 +74,10 @@ let g:lightline#ale#indicator_infos = "\uf129"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"
 let g:lightline#ale#indicator_ok = "\uf00c"
+
+" " In ~/.vim/vimrc, or somewhere similar.
+let g:ale_fixers = {
+\   'python': ['black'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
+let g:ale_fix_on_save = 1
