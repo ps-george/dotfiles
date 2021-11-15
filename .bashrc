@@ -119,6 +119,9 @@ alias yesterday='vim ~/notes/$(date -d yesterday +%Y-%m-%d).md'
 alias gca='git diff --cached'
 alias gco='git checkout'
 alias gst='git status'
+alias gu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
+alias gb='git branch | cut -c 3- | fzf | xargs git checkout'
+alias githash='git rev-parse HEAD'
 # from https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
 # git fetch-pull
 alias gf='git pull --all'
