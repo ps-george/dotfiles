@@ -76,7 +76,7 @@ __powerline() {
           local PYTHON_VIRTUALENV="${COLOR_SUCCESS}(`basename \`dirname "$VIRTUAL_ENV"\``/`basename "$VIRTUAL_ENV"`)"
         fi
 
-        local cwd="$COLOR_USER\u@\h$PYTHON_VIRTUALENV\n$COLOR_CWD\w:$RESET"
+        local cwd="$COLOR_USER\u@\h $(date +%d/%m/%Y) $(date +%H:%M:%S) $PYTHON_VIRTUALENV\n$COLOR_CWD\w:$RESET"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
         # provided strings, which would cause security issues.
