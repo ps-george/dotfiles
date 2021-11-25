@@ -25,7 +25,6 @@
             sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
             sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
         ```
-    - https://app.gitbook.com/@wayhome-2/s/developers/infrastructure/kubernetes
 - [ ] fzf (https://github.com/junegunn/fzf)
 - [ ] cloud\_sql\_proxy (https://cloud.google.com/sql/docs/mysql/sql-proxy#install)
     - `cloud_sql_proxy -instances=platform-v2-project:europe-west1:customers-data-dev=tcp:5432`
@@ -47,11 +46,11 @@
       Hostname ssh.github.com
       Port 443
     ```
-- [ ] Setup wayhome pip repository (get password from 1pass)
+- [ ] Setup pypi pip repository (get password from 1pass)
     ```
     # ~/.pip/pip.conf
     [global]
-    index-url = https://****:****@pypi.futurewayhome.co.uk/simple/
+    index-url = https://****:****@pypi.****.co.uk/simple/
     ```
 
 ## Configs
