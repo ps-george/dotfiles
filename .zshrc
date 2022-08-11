@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # ~/.zshrc: executed by zsh
 
 # Load auto-completions
@@ -5,6 +7,10 @@ autoload -Uz compinit
 compinit
 
 export PATH=/usr/local/bin:$PATH
+export PATH="/snap/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$PATH"
+# add homebrew to path
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -12,8 +18,8 @@ HISTCONTROL=ignoreboth
 PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000
-HISTFILESIZE=200000
+HISTSIZE=1000000
+HISTFILESIZE=2000000
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -44,9 +50,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-# open vscode but activate the poetry venv first so linting works
-alias vscode='poetry shell && code .'
-
 # Enable 256 bit colours
 alias tmux='tmux -2'
 alias k='kubectl'
@@ -67,6 +70,7 @@ alias githash='git rev-parse HEAD'
 # git fetch-pull
 alias gf='git pull --all'
 alias gp='git push'
+alias vim="nvim"
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -78,6 +82,28 @@ fi
 # Reload bash from ~/.bashrc
 sbash () {
   source ~/.zshrc
+}
+
+k-multilog () {
+    k get po  | ag "$1" | cut -d ' ' -f1 | xargs -I {} sh -c 'echo "{}"; kubectl logs "{}" | tail -n 5;'
+}
+
+k-get-errored () {
+    if [ -z "$1"]
+    then
+        k get po | ag error
+    else
+        k get po | ag error | ag "$1"
+    fi
+}
+
+k-delete-errored () {
+  if [ ${#1} -lt 4 ] ; then
+    echo "please input an argument longer than 4 characters"
+    k get po | ag error | ag "$1"
+  else
+    k get po  | ag error | ag "$1" | cut -d ' ' -f1 | xargs -I {} kubectl delete pods "{}"
+  fi
 }
 
 # List biggest files * sizes
@@ -121,15 +147,15 @@ ctail () {
   BLACK="$(awkcol 30)"
   RED="$(awkcol 31)"
   GREEN="$(awkcol 32)"
-  YELLOW="$(awkcol 33)" 
+  YELLOW="$(awkcol 33)"
   BLUE="$(awkcol 34)"
   MAGENTA="$(awkcol 35)"
   CYAN="$(awkcol 36)"
   tail "$@" \
-  | awk " 
+  | awk "
     /NOTSET/ $MAGENTA
     /DEBUG/ $MAGENTA
-    /INFO/ $BLUE 
+    /INFO/ $BLUE
     /WARNING/ $YELLOW
     /ERROR/ $RED
     /CRITICAL/ $RED
@@ -151,15 +177,8 @@ source <(kubectl completion zsh)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
-# Enable automatic activation of virtualenvs using pyenv.
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
-
-export PATH="/snap/bin:$HOME/.local/bin:$PATH"
-export CLOUDSDK_PYTHON=/usr/bin/python
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export CLOUDSDK_PYTHON=/usr/bin/python2.7
 export NVM_DIR="$HOME/.nvm"
 # maybe required for black to run
 export LC_ALL=en_GB.UTF-8
@@ -168,4 +187,16 @@ export LANG=en_GB.UTF-8
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="$HOME/.poetry/bin:$PATH"
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export CLOUDSDK_PYTHON=$(which python3)
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# 1password autocompletion
+eval "$(op completion zsh)"; compdef _op op
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
