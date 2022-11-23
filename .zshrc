@@ -1,7 +1,4 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # ~/.zshrc: executed by zsh
-
 # Load auto-completions
 autoload -Uz compinit
 compinit
@@ -84,6 +81,10 @@ sbash () {
   source ~/.zshrc
 }
 
+kcurl () {
+  kubectl run -it --restart='Never' kcurlify --rm --image=curlimages/curl --command -- curl --connect-timeout 5 $@
+}
+
 k-multilog () {
     k get po  | ag "$1" | cut -d ' ' -f1 | xargs -I {} sh -c 'echo "{}"; kubectl logs "{}" | tail -n 5;'
 }
@@ -101,6 +102,7 @@ k-delete-errored () {
   if [ ${#1} -lt 4 ] ; then
     echo "please input an argument longer than 4 characters"
     k get po | ag error | ag "$1"
+    exit 1
   else
     k get po  | ag error | ag "$1" | cut -d ' ' -f1 | xargs -I {} kubectl delete pods "{}"
   fi
@@ -179,11 +181,13 @@ source <(kubectl completion zsh)
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export NVM_DIR="$HOME/.nvm"
+#
 # maybe required for black to run
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
+# nvm
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -192,11 +196,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# Google cloud
 export CLOUDSDK_PYTHON=$(which python3)
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 # 1password autocompletion
 eval "$(op completion zsh)"; compdef _op op
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+# direnv setup
+# https://github.com/concrete-utopia/utopia#using-direnv-to-make-your-life-easier
+eval "$(direnv hook zsh)"
