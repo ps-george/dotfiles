@@ -3,43 +3,45 @@
 # Linux
 ## Install Programs
 ### GUI
-- [ ] Web Browser (Chrome)
-    - [ ] LastPass Extension
-    - [ ] 1Password Extension
-- [ ] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
-- [ ] VSCode (https://code.visualstudio.com/docs/setup/linux)
+- [x] Web Browser (Chrome)
+    - [x] 1Password Extension
+- [x] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
+- [x] VSCode (https://code.visualstudio.com/docs/setup/linux)
 
 ### Non-GUI
-- [ ] nvim
-- [ ] git
-- [ ] tmux
-- [ ] Docker (https://docs.docker.com/engine/install/ubuntu/)
-- [ ] Docker compose (https://docs.docker.com/compose/install/)
-- [ ] Google Cloud SDK (https://cloud.google.com/sdk/docs/install#deb)
-    - `gcloud auth configure-docker`
-    - `gcloud auth login`
-- [ ] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-    - [ ] Kubectx/Kubens
+- [x] nvim
+- [x] git
+- [x] homebrew
+- [x] tmux
+- Docker desktop now includes the below two things
+- [x] Docker (https://docs.docker.com/engine/install/ubuntu/)
+- [x] Docker compose (https://docs.docker.com/compose/install/)
+- [ ] AWS SDK
+- [x] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+    - [x] brew install kubectl
+    - [x] Kubectx/Kubens
         ```
             sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
             sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
             sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
         ```
 - [ ] fzf (https://github.com/junegunn/fzf)
+- [ ] postgres
+- [x] terraform
+- [x] [autojump](https://github.com/wting/autojump)
+- [ ] migrate (https://github.com/golang-migrate/migrate/releases/tag/v4.14.1)
 - [ ] cloud\_sql\_proxy (https://cloud.google.com/sql/docs/mysql/sql-proxy#install)
     - `cloud_sql_proxy -instances=platform-v2-project:europe-west1:customers-data-dev=tcp:5432`
-- [ ] migrate (https://github.com/golang-migrate/migrate/releases/tag/v4.14.1)
-- [ ] postgres
-- [ ] terraform
-- [ ] [autojump](https://github.com/wting/autojump)
 
 ## Logins
 
-- [ ] Slack
-- [ ] 1Password
+- [x] Slack
+- [x] 1Password
+- [x] Jira
+- [ ] Sentry
 - [ ] LastPass
-- [ ] Git SSH key
-    - Do this: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/using-ssh-over-the-https-port
+- [x] Git SSH key
+    - [ ] Do this: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/using-ssh-over-the-https-port
     ```
     # ~/.ssh/config
     Host github.com
@@ -59,7 +61,8 @@
 	- `mkdir ~/.config/nvim`
 	- `cp ~/dotfiles/nvim/init.vim ~/.config/nvim/`
 - [ ] .bashrc
-- [ ] .tmuxrc
+- [x] .zshrc
+- [x] .tmuxrc
 
 # Windows
 
