@@ -9,6 +9,7 @@
 - [x] VSCode (https://code.visualstudio.com/docs/setup/linux)
 
 ### Non-GUI
+- [x] p10k
 - [x] nvim
 - [x] git
 - [x] homebrew
