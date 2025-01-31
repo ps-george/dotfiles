@@ -1,0 +1,123 @@
+#!/bin/sh
+
+set -e
+
+help() {
+    echo ""
+    echo "omctl is used to manage EKS contexts"
+    echo "Usage:"
+    echo "  To connect to an EKS cluster"
+    echo "  omctl -c|--connect <context_name>"
+    echo "  To list available EKS clusters"
+    echo "  omctl -s|--show-config"
+    echo "  To delete existing omctl cache"
+    echo "  omctl --clear-cache"
+    echo ""
+    exit 0
+}
+
+# Now we know we have $1 set we check for undefined variables
+set -u
+
+# shellcheck source=lib.sh
+. "$(dirname "${0}")/../lib.sh"
+
+# Nasty hack inbound: Can't use associative arrays on OS X bash, so use a config file and yq
+# yq doesn't link symbolic links
+omctl_config="${OM_HOME}/config.yaml"
+omctl_cache="${OM_CACHE_DIR}/omctl"
+mkdir -p "$omctl_cache"
+
+get_field() {
+    field="$1"
+    yq eval "$field" "$omctl_config"
+}
+
+connect() {
+    omctx=$1
+    info "Connecting to ${omctx}"
+    debug "Using config ${omctl_config}"
+
+    # 1Password item where credentials are stored
+    item_name="tscrjjxxhoeu2danjynbhlrss4"
+
+    # Fetch the AWS password and OTP from 1Password CLI
+    info "Fetching credentials from 1Password for ${item_name}"
+    $(op item get "$item_name" --field password | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | pbcopy)
+    otp_code=$(op item get "${item_name}" --otp)
+
+    if [ "${omctx}" != "main" ] && [ "${omctx}" != "main-developers" ]; then
+        info "Getting aws_account"
+        aws_account="$(get_field ".contexts.${omctx}.aws_account")"
+        info "Getting k8s_cluster_name"
+        k8s_cluster_name="$(get_field ".contexts.${omctx}.k8s_cluster_name")"
+        info "Getting k8s_namespace"
+        k8s_namespace="$(get_field ".contexts.${omctx}.k8s_namespace")"
+        info "Using AWS: ${aws_account}, k8s: ${k8s_cluster_name}/${k8s_namespace}"
+
+        # Write the kubeconfig to a separate file so we can actually connect to multiple clusters simultaneously
+        kubeconfig="${omctl_cache}/kubeconfig.${aws_account}.${k8s_cluster_name}.${k8s_namespace}"
+        if [ ! -f "$kubeconfig" ]
+        then
+            info "Writing kube config to ${kubeconfig}"
+            aws-vault exec "$aws_account" --mfa-token "$otp_code" -- aws eks update-kubeconfig --name "$k8s_cluster_name" --kubeconfig "$kubeconfig" --alias "$omctx"
+        else
+            info "Using old kubeconfig in ${kubeconfig}"
+        fi
+        # Update the namespace
+        KUBECONFIG="$kubeconfig" kubectl config set-context "$omctx" --namespace="$k8s_namespace"
+
+        # Variables will be inherited by the child shell
+        export KUBECONFIG="$kubeconfig"
+    else
+        info "Skipping aws_account / k8s_cluster steps"
+        info "You won't be able to connect to k8s"
+        aws_account="$omctx"
+    fi
+    export OMCTL_CTX="$omctx"
+
+    # Use aws-vault exec with password and otp from 1Password
+    aws-vault exec "$aws_account" --mfa-token "$otp_code" -- "$SHELL" -l
+}
+
+
+show_config() {
+    info "Config from ${omctl_config}:"
+    get_field "."
+}
+
+clear_cache() {
+    info "Clearing cache from ${omctl_cache}"
+    rm -rf "$omctl_cache"
+}
+
+if ! yq --version | grep -q "v4.";
+then
+   fatal "You need yq version after 4.30.4"
+   exit 0
+else
+  info "yq version ok"
+fi
+
+if [ -n "${OMCTL_CTX:-}" ]
+then
+    fatal "You cannot nest omctl sessions, exit this shell and create a new one."
+elif [ -n "${KUBECONFIG:-}" ]
+then
+    warn "the KUBECONFIG environment variable is set"
+    fatal "omctl does not work with the env var KUBECONFIG set, please remove it from your shells login profile (~/.bash_profile, ~/.zshrc etc) and try again."
+elif [ -z "${1:-}" ]
+then
+    help
+elif [ "$1" = "-c" ] || [ "$1" = "--connect" ]
+then
+    connect "$2"
+elif [ "$1" = "-s" ] || [ "$1" = "--show-config" ]
+then
+    show_config
+elif [ "$1" = "--clear-cache" ]
+then
+    clear_cache
+else 
+    help
+fi

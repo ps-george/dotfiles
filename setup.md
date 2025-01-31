@@ -4,32 +4,46 @@
 ## Install Programs
 ### GUI
 - [x] Web Browser (Chrome)
-    - [x] 1Password Extension
-- [x] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
-- [x] VSCode (https://code.visualstudio.com/docs/setup/linux)
+    - [ ] 1Password Extension
+- [ ] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
+- [ ] VSCode (https://code.visualstudio.com/docs/setup/linux)
 
 ### Non-GUI
-- [x] p10k
-- [x] nvim
-- [x] git
-- [x] homebrew
-- [x] tmux
+- [ ] atuin
+- [ ] p10k
+- [ ] nvim
+- [ ] git
+- [ ] homebrew
+- [ ] asdf
+- [ ] tmux
+- [ ] pyenv
+- [ ] 1password cli
+- [ ] brew install colima
+- [ ] brew install qemu
+- [ ] brew install docker-compose
+- [ ] brew uninstall --cask docker --force
+- [ ] brew uninstall --formula docker --force
+- [ ] brew install --cask docker
+- [ ] brew services start colima
 - Docker desktop now includes the below two things
-- [x] Docker (https://docs.docker.com/engine/install/ubuntu/)
-- [x] Docker compose (https://docs.docker.com/compose/install/)
-- [ ] AWS SDK
-- [x] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-    - [x] brew install kubectl
-    - [x] Kubectx/Kubens
+- [ ] Docker (https://docs.docker.com/engine/install/ubuntu/)
+- [ ] Docker compose (https://docs.docker.com/compose/install/)
+- B t use colima instead for now.
+- [ ] AWS SDK (brew install awscli)
+- [ ] SOPS (secure secret storage)
+- [ ] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+    - [ ] brew install kubectl
+    - [ ] Kubectx/Kubens
         ```
             sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
             sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
             sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
         ```
 - [ ] fzf (https://github.com/junegunn/fzf)
+- [ ] direnv
 - [ ] postgres
-- [x] terraform
-- [x] [autojump](https://github.com/wting/autojump)
+- [ ] terraform
+- [ ] [autojump](https://github.com/wting/autojump)
 - [ ] migrate (https://github.com/golang-migrate/migrate/releases/tag/v4.14.1)
 - [ ] cloud\_sql\_proxy (https://cloud.google.com/sql/docs/mysql/sql-proxy#install)
     - `cloud_sql_proxy -instances=platform-v2-project:europe-west1:customers-data-dev=tcp:5432`
@@ -41,7 +55,8 @@
 - [x] Jira
 - [ ] Sentry
 - [ ] LastPass
-- [x] Git SSH key
+- [ ] Dockerhub
+- [ ] Git SSH key
     - [ ] Do this: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/using-ssh-over-the-https-port
     ```
     # ~/.ssh/config
@@ -62,8 +77,8 @@
 	- `mkdir ~/.config/nvim`
 	- `cp ~/dotfiles/nvim/init.vim ~/.config/nvim/`
 - [ ] .bashrc
-- [x] .zshrc
-- [x] .tmuxrc
+- [ ] .zshrc
+- [ ] .tmuxrc
 
 # Windows
 

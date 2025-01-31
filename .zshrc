@@ -1,7 +1,19 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # ~/.zshrc: executed by zsh
 # Load auto-completions
 autoload -Uz compinit
 compinit
+
+# emacs bindings for terminal
+export VISUAL=vim
+export EDITOR="$VISUAL"
+bindkey -e
 
 export PATH=/usr/local/bin:$PATH
 export PATH="/snap/bin:$HOME/.local/bin:$PATH"
@@ -9,32 +21,19 @@ export PATH="$HOME/.poetry/bin:$PATH"
 # add homebrew to path
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-# cross-shell history update
-PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000000
-HISTFILESIZE=2000000
+# Set up x86_64 homebrew and pyenv and temporarily set aliases
+alias brew86="arch -x86_64 /usr/local/bin/brew"
+alias pyenv86="arch -x86_64 pyenv"
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Key bindings, up/down arrow searches through history
-# Cycle through history based on characters already typed on the line
-autoload -U history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
-bindkey "${terminfo[kcuu1]}" history-beginning-search-backward
-bindkey "${terminfo[kcud1]}" history-beginning-search-forward
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+# clears clipboard
+alias x='echo "x" | pbcopy'
 alias back='cd $OLDPWD'
 alias mkdir='mkdir -p -v'
 
@@ -47,18 +46,61 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
+# Make and delete pyenvs
+function makenv() {
+	folder_name=${PWD##*/}
+	if [ -z "$2" ]; then
+          folder_name=$2
+        fi
+	if [ -z "$1" ]; then
+	  echo "pyenv virtualenv <version> $folder_name"
+	  echo "or: makenv 3.8"
+	else
+	  echo "pyenv virtualenv $1 $folder_name"
+	  pyenv virtualenv "$1" "$folder_name"
+	fi
+}
+
+function delenv() {
+	folder_name=${PWD##*/}
+	target_dir="$(eval echo "~/.pyenv/versions/${folder_name}")"
+	if [ ! -L "${target_dir}" ]; then
+		echo "${target_dir} does not exist"
+		return
+	fi
+	to_remove=( $(find ~/.pyenv/versions -path "*/envs/*" -type d -name "${PWD##*/}") )
+	for dir in "${to_remove[@]}"; do
+	    echo -n "Do you want to delete the directory '$dir'? [y/N] "
+	    read choice
+	    case "$choice" in
+		[yY]|[yY][eE][sS])
+		    rm -rf "$dir"
+		    echo "Directory '$dir' deleted."
+		    ;;
+		*)
+		    echo "Skipping deletion of directory '$dir'."
+		    ;;
+	    esac
+	done
+	rm "${target_dir}"
+}
+
 # Enable 256 bit colours
 alias tmux='tmux -2'
 alias k='kubectl'
 alias kx="kubectx"
-alias activate='source ./venv/bin/activate'
+# alias activate='source ./venv/bin/activate'
+alias uuidgen='uuidgen | tr A-F a-f'
+alias mkenv='pyenv virtualenv ${PWD##*/}'
+alias activate='pyenv activate ${PWD##*/}'
+alias deactivate='pyenv deactivate'
 alias pip='pip3'
-alias note='vim ~/notes/general.md'
-alias today='vim ~/notes/$(date +%Y-%m-%d).md'
+alias note='vim ./general.md'
+alias today='vim ./$(date +%Y-%m-%d).md'
 alias yesterday='vim ~/notes/$(date -d yesterday +%Y-%m-%d).md'
 alias pslist='ps aux | fzf'
 alias gca='git diff --cached'
-alias gco='git checkout'
+alias gco='git checkout -b'
 alias gst='git status'
 alias gu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gb='git branch | cut -c 3- | fzf | xargs git checkout'
@@ -67,7 +109,9 @@ alias githash='git rev-parse HEAD'
 # git fetch-pull
 alias gf='git pull --all'
 alias gp='git push'
-alias vim="nvim"
+# alias vim="nvim"
+alias db-forward='kubectl port-forward svc/pgbouncer2 54321:5432'
+alias db-connect='export PGPASSWORD=$(op item get --fields password 3syfsj2bsxbssatnquue2vhhy4) && psql -h localhost --user ometria --port 54321 ometria_ecomm'
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -79,6 +123,11 @@ fi
 # Reload bash from ~/.bashrc
 sbash () {
   source ~/.zshrc
+}
+
+# Edit bash from ~/.bashrc
+ebash () {
+  vim ~/.zshrc
 }
 
 kcurl () {
@@ -179,8 +228,6 @@ source <(kubectl completion zsh)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
-export VISUAL=vim
-export EDITOR="$VISUAL"
 #
 # maybe required for black to run
 export LC_ALL=en_GB.UTF-8
@@ -205,3 +252,28 @@ eval "$(op completion zsh)"; compdef _op op
 # direnv setup
 # https://github.com/concrete-utopia/utopia#using-direnv-to-make-your-life-easier
 eval "$(direnv hook zsh)"
+
+# asdf (https://asdf-vm.com/)
+export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
+. "$HOME/.asdf/asdf.sh"
+# . "$HOME/.asdf/completions/asdf.bash"
+
+export PATH="${PATH}:/Users/georgepunter/repos/ometria.tools/bin"
+
+# login to docker using op
+
+dockerlogin () {
+  docker login -u="$(eval "op item get --fields username 76nqhtqftnl3mbnzzlmqttpqki")" -p="$(eval "op item get --fields credential 76nqhtqftnl3mbnzzlmqttpqki")"
+}
+
+export GOSS_PATH=/usr/local/bin/goss-linux-amd64
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+. "$HOME/.atuin/bin/env"
+
+unsetopt SHARE_HISTORY
+eval "$(atuin init zsh)"
