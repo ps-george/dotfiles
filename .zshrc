@@ -4,8 +4,6 @@ autoload -Uz compinit
 compinit
 
 export PATH=/usr/local/bin:$PATH
-export PATH="/snap/bin:$HOME/.local/bin:$PATH"
-export PATH="$HOME/.poetry/bin:$PATH"
 # add homebrew to path
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -20,16 +18,6 @@ HISTFILESIZE=2000000
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Key bindings, up/down arrow searches through history
-# Cycle through history based on characters already typed on the line
-autoload -U history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
-bindkey "${terminfo[kcuu1]}" history-beginning-search-backward
-bindkey "${terminfo[kcud1]}" history-beginning-search-forward
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -186,15 +174,10 @@ export EDITOR="$VISUAL"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# eval "$(pyenv init -)"
 
 # Google cloud
 export CLOUDSDK_PYTHON=$(which python3)
@@ -204,4 +187,4 @@ export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 eval "$(op completion zsh)"; compdef _op op
 # direnv setup
 # https://github.com/concrete-utopia/utopia#using-direnv-to-make-your-life-easier
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"

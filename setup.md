@@ -3,24 +3,30 @@
 # Linux
 ## Install Programs
 ### GUI
-- [x] Web Browser (Chrome)
-    - [x] 1Password Extension
-- [x] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
-- [x] VSCode (https://code.visualstudio.com/docs/setup/linux)
+- [x] Web Browser (Brave)
+    - [] 1Password Extension
+    - [x] OneTab
+- [] Slack (https://slack.com/intl/en-gb/downloads/instructions/ubuntu)
+- [x] Cursor Code Editor
 
 ### Non-GUI
 - [x] p10k
 - [x] nvim
-- [x] git
+- [] git
+- [x] https://github.com/XcodesOrg/xcodes/
+- [ ] Android Studio
+- [ ] Java
+- [ ] NDK
 - [x] homebrew
 - [x] tmux
 - Docker desktop now includes the below two things
-- [x] Docker (https://docs.docker.com/engine/install/ubuntu/)
-- [x] Docker compose (https://docs.docker.com/compose/install/)
+- [x] Docker (brew install docker)
+- [x] Docker compose (brew install docker-compose and docker cli plugin things)
+- [x] colima
 - [ ] AWS SDK
-- [x] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-    - [x] brew install kubectl
-    - [x] Kubectx/Kubens
+- [] Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+    - [] brew install kubectl
+    - [] Kubectx/Kubens
         ```
             sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
             sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
